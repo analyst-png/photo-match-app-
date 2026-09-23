@@ -385,8 +385,9 @@
     if(e.dataTransfer.files.length) handleGalleryFiles(e.dataTransfer.files);
   });
   galleryInput.addEventListener("change", e=>{
-    if(e.target.files.length) handleGalleryFiles(e.target.files);
+    const files = Array.from(e.target.files);
     galleryInput.value = "";
+    if(files.length) handleGalleryFiles(files);
   });
 
   async function handleGalleryFiles(fileList){
@@ -482,8 +483,9 @@
     if(e.dataTransfer.files.length) handleSelfieFile(e.dataTransfer.files[0]);
   });
   selfieInput.addEventListener("change", e=>{
-    if(e.target.files.length) handleSelfieFile(e.target.files[0]);
+    const file = e.target.files[0];
     selfieInput.value = "";
+    if(file) handleSelfieFile(file);
   });
   thresholdSlider.addEventListener("change", ()=>{
     if(currentDescriptor) runSearch();
