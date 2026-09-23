@@ -135,6 +135,13 @@
 
   .empty-state{color:var(--text-dim);font-size:.92rem;padding:26px 4px;text-align:center;}
 
+  .clear-all-row{margin-top:28px;padding-top:16px;border-top:1px solid var(--border);text-align:right;}
+  .btn-text-danger{
+    background:none;border:none;color:var(--text-dim);font-size:.8rem;cursor:pointer;
+    padding:6px 4px;transition:color .15s;
+  }
+  .btn-text-danger:hover{color:var(--danger);}
+
   .threshold-row{margin:22px 0;}
   .threshold-row label{display:block;font-size:.88rem;color:var(--text-dim);margin-bottom:8px;}
   input[type=range]{width:100%;accent-color:var(--teal);}
@@ -161,23 +168,6 @@
     display:inline-block;background:var(--amber-bg);color:#9A5B12;border:1px solid var(--amber);
     font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:4px;
   }
-
-  .share-card{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
-    padding:30px 26px;text-align:center;box-shadow:var(--shadow-pop);
-  }
-  .share-card p.hint{color:var(--text-dim);font-size:.88rem;max-width:46ch;margin:0 auto 20px;}
-  #qrCanvasWrap{display:flex;justify-content:center;margin-bottom:18px;}
-  #qrCanvasWrap canvas{border-radius:var(--radius-sm);border:1px solid var(--border);}
-  .link-row{
-    display:flex;gap:8px;max-width:440px;margin:0 auto;
-  }
-  .link-row input{
-    flex:1;padding:10px 12px;border-radius:999px;border:1px solid var(--border);
-    background:var(--paper);color:var(--text-dim);font-size:.85rem;
-  }
-  .copied-msg{color:var(--teal-dark);font-size:.8rem;margin-top:8px;display:none;}
-  .copied-msg.show{display:block;}
 
   .lightbox{
     position:fixed;inset:0;background:rgba(19,34,38,.9);display:none;align-items:center;justify-content:center;
@@ -217,7 +207,6 @@
     <nav class="tabs">
       <button class="tab active" data-tab="upload">คลังรูปงาน</button>
       <button class="tab" data-tab="search">หารูปของฉัน</button>
-      <button class="tab" data-tab="share">แชร์ให้คนอื่น</button>
     </nav>
 
     <!-- UPLOAD PANEL -->
@@ -236,11 +225,14 @@
 
       <div class="row">
         <span class="count-pill">มีรูปอยู่ในคลัง <b id="galleryCount">0</b> รูป</span>
-        <button class="btn danger" id="clearAllBtn">ล้างคลังทั้งหมด</button>
       </div>
 
       <div class="contact-sheet" id="galleryGrid"></div>
       <p class="empty-state" id="galleryEmpty">ยังไม่มีรูปในคลัง — เริ่มจากอัปโหลดรูปงานด้านบน</p>
+
+      <div class="clear-all-row">
+        <button class="btn-text-danger" id="clearAllBtn">ล้างคลังทั้งหมด</button>
+      </div>
     </section>
 
     <!-- SEARCH PANEL -->
@@ -255,7 +247,7 @@
       <div class="selfie-preview" id="selfiePreview" style="display:none;">
         <img id="selfieImg" alt="รูปที่ใช้ค้นหา" />
         <div>
-          <div style="font-weight:600;color:var(--navy);">รูปที่ใช้ค้นหา</div>
+          <div style="font-weight:600;color:var(--ink);">รูปที่ใช้ค้นหา</div>
           <div style="color:var(--text-dim);font-size:.85rem;" id="selfieStatus">กำลังตรวจจับใบหน้า…</div>
         </div>
       </div>
@@ -275,19 +267,6 @@
       <div class="results-grid" id="resultsGrid"></div>
       <p class="empty-state" id="resultsEmpty">อัปโหลดรูปตัวเองด้านบนเพื่อเริ่มค้นหา</p>
     </section>
-
-    <!-- SHARE PANEL -->
-    <section class="panel" id="panel-share">
-      <div class="share-card">
-        <p class="hint">ให้คนอื่นสแกน QR หรือกดลิงก์นี้ เพื่อเปิดหน้านี้และค้นหารูปของตัวเองได้เลย ทุกคนที่เปิดลิงก์นี้จะเห็นคลังรูปงานชุดเดียวกัน</p>
-        <div id="qrCanvasWrap"></div>
-        <div class="link-row">
-          <input type="text" id="shareLinkInput" readonly />
-          <button class="btn" id="copyLinkBtn">คัดลอกลิงก์</button>
-        </div>
-        <p class="copied-msg" id="copiedMsg">คัดลอกลิงก์แล้ว</p>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -300,7 +279,6 @@
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -608,37 +586,8 @@
   lightbox.addEventListener("click", (e)=>{ if(e.target===lightbox) lightbox.classList.remove("show"); });
   function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add("show"); }
 
-  // ---------- Share / QR ----------
-  function renderShare(){
-    const url = window.location.href;
-    const input = document.getElementById("shareLinkInput");
-    input.value = url;
-    const wrap = document.getElementById("qrCanvasWrap");
-    wrap.innerHTML = "";
-    if(url.startsWith("http") && window.QRCode){
-      const canvas = document.createElement("canvas");
-      wrap.appendChild(canvas);
-      QRCode.toCanvas(canvas, url, { width:220, margin:1, color:{ dark:"#1D2B36", light:"#FFFFFF" } });
-    }else{
-      wrap.innerHTML = '<p style="color:var(--text-dim);font-size:.85rem;">QR code จะแสดงเมื่อหน้านี้ถูกเปิดผ่านลิงก์ https:// จริง (ไม่ใช่ไฟล์ที่เปิดตรงจากเครื่อง)</p>';
-    }
-  }
-  document.getElementById("copyLinkBtn").addEventListener("click", async ()=>{
-    const input = document.getElementById("shareLinkInput");
-    try{
-      await navigator.clipboard.writeText(input.value);
-    }catch(e){
-      input.select();
-      document.execCommand("copy");
-    }
-    const msg = document.getElementById("copiedMsg");
-    msg.classList.add("show");
-    setTimeout(()=>msg.classList.remove("show"), 1800);
-  });
-
   // ---------- Init ----------
   refreshGallery();
-  renderShare();
 })();
 </script>
 </body>
