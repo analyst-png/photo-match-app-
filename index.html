@@ -8,665 +8,591 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-  :root{
-    --teal:#0EA99A;
-    --teal-dark:#086F66;
-    --teal-pale:#E7F6F4;
-    --ink:#132226;
-    --ink-soft:#5C726E;
-    --paper:#F3FAF9;
-    --surface:#FFFFFF;
-    --border:#DCEEEC;
-    --text:#132226;
-    --text-dim:#5C726E;
-    --amber:#EE9C3A;
-    --amber-bg:#FCEEDC;
-    --danger:#E1553B;
-    --danger-bg:rgba(225,85,59,.08);
-    --radius-lg:20px;
-    --radius:14px;
-    --radius-sm:10px;
-    --shadow-card:0 1px 2px rgba(19,34,38,.04), 0 10px 26px -14px rgba(14,169,154,.35);
-    --shadow-pop:0 16px 40px -18px rgba(14,169,154,.4);
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(680px 320px at 50% -60px, rgba(14,169,154,.09), transparent 70%),
-      var(--paper);
-    color:var(--text);
-    font-family:'Noto Sans Thai','Noto Sans',sans-serif;
-    line-height:1.6;
-    min-height:100vh;
-    padding-bottom:60px;
-  }
-  h1,h2,h3,button,.tab{font-family:'Kanit','Noto Sans Thai',sans-serif;}
+:root{
+  --teal:#0F8F82;
+  --teal-deep:#0A6459;
+  --teal-bright:#1FC5B3;
+  --teal-tint:#EAF6F4;
+  --ink:#16232B;
+  --ink-soft:#57676D;
+  --paper:#F7F7F4;
+  --surface:#FFFFFF;
+  --line:#E4E3DC;
+  --amber:#C98A2E;
+  --amber-bg:#FBF1E1;
+  --coral:#C24E39;
+  --coral-bg:rgba(194,78,57,.07);
+  --radius-l:18px;
+  --radius-m:12px;
+  --radius-s:8px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans Thai','Noto Sans',sans-serif;
+  line-height:1.62;
+  min-height:100vh;
+  padding-bottom:64px;
+}
+h1,h2,h3,button,.tab{font-family:'Kanit','Noto Sans Thai',sans-serif;}
 
-  header{padding:34px 20px 26px;}
-  .header-inner{
-    max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
-    padding:22px 26px;box-shadow:var(--shadow-card);
-  }
-  .header-logo{
-    width:64px;height:64px;border-radius:50%;flex:none;object-fit:cover;
-    box-shadow:0 0 0 4px var(--teal-pale), 0 6px 16px -4px rgba(14,169,154,.35);
-  }
-  .header-text h1{font-size:clamp(1.25rem,3.2vw,1.6rem);font-weight:700;margin:0 0 6px;color:var(--ink);letter-spacing:-.01em;}
-  .header-text .lede{color:var(--text-dim);max-width:58ch;margin:0;font-size:.92rem;}
-  .teal-bar{height:4px;background:linear-gradient(90deg,var(--teal),var(--amber));opacity:.85;}
+header{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:880px;margin:0 auto;padding:26px 20px;
+  display:flex;align-items:center;gap:18px;
+}
+.header-logo{width:58px;height:58px;border-radius:50%;flex:none;}
+.header-text h1{
+  font-size:clamp(1.28rem,3.2vw,1.62rem);font-weight:700;margin:0 0 5px;
+  color:var(--ink);letter-spacing:-.01em;
+}
+.header-text .lede{color:var(--ink-soft);max-width:58ch;margin:0;font-size:.91rem;}
+.brand-rule{height:3px;background:var(--teal);}
 
-  .status-bar{
-    max-width:860px;margin:16px auto 0;padding:9px 18px;
-    background:var(--teal-pale);border:1px solid var(--border);border-radius:999px;
-    display:flex;align-items:center;gap:10px;font-size:.86rem;color:var(--teal-dark);width:fit-content;
-  }
-  .status-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;animation:pulse 1.4s infinite ease-in-out;}
-  .status-dot.ready{animation:none;background:#3AAE6B;}
-  .status-dot.error{animation:none;background:var(--danger);}
-  @keyframes pulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+.status-bar{
+  max-width:880px;margin:0 auto;padding:9px 20px;
+  display:flex;align-items:center;gap:9px;font-size:.84rem;color:var(--teal-deep);
+  border-bottom:1px solid var(--line);
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--teal-bright);flex:none;animation:pulse 1.4s infinite ease-in-out;}
+.status-dot.ready{animation:none;background:#3B9A5A;}
+.status-dot.error{animation:none;background:var(--coral);}
+@keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
 
-  main{max-width:860px;margin:0 auto;padding:0 20px;}
+main{max-width:880px;margin:0 auto;padding:0 20px;}
 
-  .tabs{
-    display:inline-flex;gap:2px;margin:28px 0 22px;padding:4px;
-    background:var(--teal-pale);border-radius:999px;flex-wrap:wrap;
-  }
-  .tab{
-    background:none;border:none;color:var(--ink-soft);padding:9px 18px;font-size:.92rem;
-    font-weight:600;cursor:pointer;border-radius:999px;transition:background .15s,color .15s,box-shadow .15s;
-  }
-  .tab:hover{color:var(--teal-dark);}
-  .tab.active{color:var(--teal-dark);background:#fff;box-shadow:var(--shadow-card);}
+.tabs{
+  display:inline-flex;gap:2px;margin:28px 0 22px;padding:4px;
+  background:var(--teal-tint);border-radius:999px;
+}
+.tab{
+  background:none;border:none;color:var(--teal-deep);padding:9px 20px;font-size:.92rem;
+  font-weight:600;cursor:pointer;border-radius:999px;transition:background .15s,color .15s;
+}
+.tab.active{background:var(--teal);color:#fff;}
+.tab:not(.active):hover{background:rgba(15,143,130,.1);}
 
-  .panel{display:none;}
-  .panel.active{display:block;}
+.panel{display:none;}
+.panel.active{display:block;}
 
-  .dropzone{
-    border:1.5px dashed var(--border);border-radius:var(--radius-lg);background:var(--surface);
-    padding:38px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s;
-  }
-  .dropzone:hover,.dropzone.drag{border-color:var(--teal);background:var(--teal-pale);box-shadow:var(--shadow-card);}
-  .dropzone .dz-icon{color:var(--teal);margin:0 auto 10px;display:block;}
-  .dropzone .dz-title{font-weight:600;margin:0 0 4px;color:var(--ink);}
-  .dropzone .dz-sub{color:var(--text-dim);font-size:.88rem;margin:0;}
-  .dropzone input{display:none;}
+.dropzone{
+  display:block;
+  border:1.5px dashed var(--line);border-radius:var(--radius-l);background:var(--surface);
+  padding:38px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;
+}
+.dropzone:hover,.dropzone.drag{border-color:var(--teal);background:var(--teal-tint);}
+.dropzone .dz-title{font-weight:600;margin:0 0 5px;color:var(--ink);font-size:1.02rem;}
+.dropzone .dz-sub{color:var(--ink-soft);font-size:.87rem;margin:0;max-width:46ch;margin-inline:auto;}
+.dropzone input{display:none;}
 
-  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px;flex-wrap:wrap;}
-  .count-pill{font-size:.88rem;color:var(--text-dim);}
-  .count-pill b{color:var(--ink);}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px;flex-wrap:wrap;}
+.count-pill{font-size:.87rem;color:var(--ink-soft);}
+.count-pill b{color:var(--ink);}
 
-  button.btn{
-    background:var(--teal);color:#fff;border:none;border-radius:999px;padding:10px 20px;
-    font-weight:600;font-size:.9rem;cursor:pointer;transition:background .15s,transform .1s;
-  }
-  button.btn:hover{background:var(--teal-dark);}
-  button.btn:active{transform:scale(.97);}
-  button.btn:disabled{opacity:.45;cursor:not-allowed;}
-  button.btn.ghost{background:none;border:1px solid var(--border);color:var(--text-dim);}
-  button.btn.danger{background:none;border:1px solid var(--danger);color:var(--danger);}
+button.btn{
+  background:var(--teal);color:#fff;border:none;border-radius:var(--radius-s);padding:10px 18px;
+  font-weight:600;font-size:.9rem;cursor:pointer;transition:background .15s;
+}
+button.btn:hover{background:var(--teal-deep);}
+button.btn:disabled{opacity:.4;cursor:not-allowed;}
+button.btn.danger{background:none;border:1px solid var(--coral);color:var(--coral);}
+button.btn.danger:hover{background:var(--coral-bg);}
 
-  .progress-wrap{margin:16px 0;display:none;}
-  .progress-wrap.show{display:block;}
-  .progress-track{height:6px;background:var(--teal-pale);border-radius:4px;overflow:hidden;}
-  .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));width:0%;transition:width .2s;}
-  .progress-label{font-size:.82rem;color:var(--text-dim);margin-top:6px;}
+.progress-wrap{margin:16px 0;display:none;}
+.progress-wrap.show{display:block;}
+.progress-track{height:5px;background:var(--teal-tint);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--teal);width:0%;transition:width .2s;}
+.progress-label{font-size:.82rem;color:var(--ink-soft);margin-top:7px;}
 
-  .contact-sheet{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:18px;
-  }
-  .frame{
-    position:relative;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:var(--teal-pale);
-    border:1px solid var(--border);transition:transform .15s ease,box-shadow .15s ease;
-  }
-  .frame:hover{transform:translateY(-2px);box-shadow:var(--shadow-card);}
-  .frame img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;}
-  .frame .face-badge{
-    position:absolute;bottom:7px;left:7px;background:rgba(19,34,38,.7);color:#fff;
-    font-size:.7rem;padding:2px 8px;border-radius:20px;backdrop-filter:blur(2px);
-  }
-  .frame .del-btn{
-    position:absolute;top:7px;right:7px;background:rgba(19,34,38,.55);color:#fff;
-    border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:.9rem;line-height:1;
-    transition:background .15s;
-  }
-  .frame .del-btn:hover{background:var(--danger);}
+.contact-sheet{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:10px;margin-top:18px;
+}
+.frame{
+  position:relative;aspect-ratio:1/1;border-radius:var(--radius-m);overflow:hidden;background:var(--teal-tint);
+  border:1px solid var(--line);
+}
+.frame img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;}
+.frame .face-badge{
+  position:absolute;bottom:6px;left:6px;background:rgba(22,35,43,.72);color:#fff;
+  font-size:.68rem;padding:2px 8px;border-radius:20px;
+}
+.frame .del-btn{
+  position:absolute;top:6px;right:6px;background:rgba(22,35,43,.55);color:#fff;
+  border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:.9rem;line-height:1;
+}
+.frame .del-btn:hover{background:var(--coral);}
 
-  .empty-state{color:var(--text-dim);font-size:.92rem;padding:26px 4px;text-align:center;}
+.empty-state{color:var(--ink-soft);font-size:.9rem;padding:24px 4px;text-align:center;}
 
-  .clear-all-row{margin-top:28px;padding-top:16px;border-top:1px solid var(--border);text-align:right;}
-  .btn-text-danger{
-    background:none;border:none;color:var(--text-dim);font-size:.8rem;cursor:pointer;
-    padding:6px 4px;transition:color .15s;
-  }
-  .btn-text-danger:hover{color:var(--danger);}
+.threshold-row{margin:22px 0;}
+.threshold-row label{display:block;font-size:.87rem;color:var(--ink-soft);margin-bottom:9px;}
+input[type=range]{width:100%;accent-color:var(--teal);}
+.threshold-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink-soft);margin-top:3px;}
 
-  .threshold-row{margin:22px 0;}
-  .threshold-row label{display:block;font-size:.88rem;color:var(--text-dim);margin-bottom:8px;}
-  input[type=range]{width:100%;accent-color:var(--teal);}
-  .threshold-labels{display:flex;justify-content:space-between;font-size:.76rem;color:var(--text-dim);margin-top:2px;}
+.selfie-preview{display:flex;gap:14px;align-items:center;margin:18px 0;}
+.selfie-preview img{width:68px;height:68px;object-fit:cover;border-radius:50%;border:2px solid var(--teal);}
 
-  .selfie-preview{display:flex;gap:14px;align-items:center;margin:18px 0;}
-  .selfie-preview img{width:72px;height:72px;object-fit:cover;border-radius:50%;border:2px solid var(--teal);}
+.search-error{
+  background:var(--coral-bg);border:1px solid var(--coral);color:var(--ink);
+  padding:11px 15px;border-radius:var(--radius-s);font-size:.87rem;margin:16px 0;display:none;
+}
+.search-error.show{display:block;}
 
-  .search-error{
-    background:var(--danger-bg);border:1px solid var(--danger);color:var(--text);
-    padding:10px 14px;border-radius:var(--radius-sm);font-size:.88rem;margin:14px 0;display:none;
-  }
-  .search-error.show{display:block;}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:20px;}
+.result-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;
+}
+.result-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:pointer;}
+.result-meta{padding:9px 11px;font-size:.77rem;color:var(--ink-soft);}
+.match-tag{
+  display:inline-block;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber);
+  font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;
+}
 
-  .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:18px;}
-  .result-card{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
-    box-shadow:var(--shadow-card);transition:transform .15s ease;
-  }
-  .result-card:hover{transform:translateY(-2px);}
-  .result-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:pointer;}
-  .result-meta{padding:9px 11px;font-size:.78rem;color:var(--text-dim);}
-  .match-tag{
-    display:inline-block;background:var(--amber-bg);color:#9A5B12;border:1px solid var(--amber);
-    font-size:.7rem;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:4px;
-  }
+.lightbox{
+  position:fixed;inset:0;background:rgba(22,35,43,.9);display:none;align-items:center;justify-content:center;
+  z-index:50;padding:24px;
+}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:100%;max-height:100%;border-radius:8px;}
+.lightbox-close{position:absolute;top:18px;right:22px;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer;}
 
-  .lightbox{
-    position:fixed;inset:0;background:rgba(19,34,38,.9);display:none;align-items:center;justify-content:center;
-    z-index:50;padding:24px;
-  }
-  .lightbox.show{display:flex;}
-  .lightbox img{max-width:100%;max-height:100%;border-radius:10px;}
-  .lightbox-close{position:absolute;top:18px;right:22px;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer;z-index:2;}
-  .lightbox-nav{
-    position:absolute;top:50%;transform:translateY(-50%);
-    background:rgba(255,255,255,.12);border:none;color:#fff;
-    width:46px;height:46px;border-radius:50%;font-size:1.8rem;line-height:1;
-    display:flex;align-items:center;justify-content:center;cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .lightbox-nav:hover{background:rgba(255,255,255,.24);}
-  .lightbox-prev{left:14px;}
-  .lightbox-next{right:14px;}
-  .lightbox-counter{
-    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
-    color:#fff;font-size:.82rem;background:rgba(29,43,54,.55);
-    padding:4px 12px;border-radius:20px;
-  }
-  @media (max-width:520px){
-    .lightbox-nav{width:40px;height:40px;font-size:1.5rem;}
-    .lightbox-prev{left:6px;}
-    .lightbox-next{right:6px;}
-  }
+footer{max-width:880px;margin:40px auto 0;padding:0 20px;color:var(--ink-soft);font-size:.8rem;border-top:1px solid var(--line);padding-top:20px;}
 
-  footer{max-width:860px;margin:40px auto 0;padding:0 20px;color:var(--text-dim);font-size:.8rem;}
-
-  @media (max-width:520px){
-    .contact-sheet,.results-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));}
-    .header-inner{flex-direction:column;text-align:center;padding:22px 18px;}
-  }
+@media (max-width:520px){
+  .contact-sheet,.results-grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));}
+}
 </style>
 </head>
 <body>
+<header>
+<div class="header-inner">
+<img class="header-logo" src="data:image/jpeg;base64,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" alt="Bangkok Eye Hospital" />
+<div class="header-text">
+<h1>ค้นหารูปของคุณจากคลังภาพงาน</h1>
+<p class="lede">อัปโหลดรูปงานไว้ในคลังกลาง แล้วให้แต่ละคนอัปโหลดรูปเซลฟี่เพื่อค้นหาเฉพาะรูปของตัวเอง — การตรวจจับใบหน้าประมวลผลในเบราว์เซอร์ ส่วนรูปภาพจะถูกอัปโหลดเก็บไว้ที่ส่วนกลางเพื่อให้ทุกคนเข้าถึงคลังเดียวกันได้</p>
+</div>
+</div>
+</header>
+<div class="brand-rule"></div>
+<div class="status-bar" id="statusBar">
+<span class="status-dot" id="statusDot"></span>
+<span id="statusText">กำลังโหลดโมเดล AI สำหรับจดจำใบหน้า…</span>
+</div>
+<main>
+<nav class="tabs">
+<button class="tab active" data-tab="upload">คลังรูปงาน</button>
+<button class="tab" data-tab="search">หารูปของฉัน</button>
+</nav>
 
-  <header>
-    <div class="header-inner">
-      <img class="header-logo" src="logo.png" alt="Bangkok Eye Hospital" />
-      <div class="header-text">
-        <h1>ค้นหารูปของคุณจากคลังภาพงาน</h1>
-        <p class="lede">อัปโหลดรูปงานไว้ในคลังกลาง แล้วให้แต่ละคนอัปโหลดรูปเซลฟี่เพื่อค้นหาเฉพาะรูปของตัวเอง — การตรวจจับใบหน้าประมวลผลในเบราว์เซอร์ ส่วนรูปภาพจะถูกอัปโหลดเก็บไว้ที่ส่วนกลางเพื่อให้ทุกคนเข้าถึงคลังเดียวกันได้</p>
-      </div>
-    </div>
-  </header>
-  <div class="teal-bar"></div>
+<!-- UPLOAD PANEL -->
+<section class="panel active" id="panel-upload">
+<label class="dropzone" id="galleryDrop" for="galleryInput">
+<p class="dz-title">ลากรูปงานมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+<p class="dz-sub">เลือกได้ทีละหลายรูป (JPG / PNG) ระบบจะตรวจจับใบหน้าในแต่ละรูปให้อัตโนมัติ และข้ามรูปที่ซ้ำกับที่มีอยู่แล้วให้อัตโนมัติ</p>
+<input type="file" id="galleryInput" accept="image/*" multiple />
+</label>
+<div class="progress-wrap" id="uploadProgressWrap">
+<div class="progress-track"><div class="progress-fill" id="uploadProgressFill"></div></div>
+<p class="progress-label" id="uploadProgressLabel"></p>
+</div>
+<div class="row">
+<span class="count-pill">มีรูปอยู่ในคลัง <b id="galleryCount">0</b> รูป</span>
+<button class="btn danger" id="clearAllBtn">ล้างคลังทั้งหมด</button>
+</div>
+<div class="contact-sheet" id="galleryGrid"></div>
+<p class="empty-state" id="galleryEmpty">ยังไม่มีรูปในคลัง — เริ่มจากอัปโหลดรูปงานด้านบน</p>
+</section>
 
-  <div class="status-bar" id="statusBar">
-    <span class="status-dot" id="statusDot"></span>
-    <span id="statusText">กำลังโหลดโมเดล AI สำหรับจดจำใบหน้า…</span>
-  </div>
+<!-- SEARCH PANEL -->
+<section class="panel" id="panel-search">
+<label class="dropzone" id="selfieDrop" for="selfieInput">
+<p class="dz-title">อัปโหลดรูปเซลฟี่หรือรูปหน้าตรงของคุณ</p>
+<p class="dz-sub">ใช้รูปที่เห็นใบหน้าชัดเจน ไม่มีสิ่งบดบัง จะช่วยให้ค้นหาแม่นยำขึ้น</p>
+<input type="file" id="selfieInput" accept="image/*" />
+</label>
+<div class="selfie-preview" id="selfiePreview" style="display:none;">
+<img id="selfieImg" alt="รูปที่ใช้ค้นหา" />
+<div>
+<div style="font-weight:600;color:var(--ink);">รูปที่ใช้ค้นหา</div>
+<div style="color:var(--ink-soft);font-size:.85rem;" id="selfieStatus">กำลังตรวจจับใบหน้า…</div>
+</div>
+</div>
+<div class="threshold-row">
+<label for="thresholdSlider">ความเข้มงวดในการจับคู่</label>
+<input type="range" id="thresholdSlider" min="0.35" max="0.75" step="0.01" value="0.52" />
+<div class="threshold-labels"><span>เข้มงวด (ตรงมาก)</span><span>หลวม (จับกว้างขึ้น)</span></div>
+</div>
+<div class="search-error" id="searchError"></div>
+<div class="row">
+<span class="count-pill" id="resultCount"></span>
+</div>
+<div class="results-grid" id="resultsGrid"></div>
+<p class="empty-state" id="resultsEmpty">อัปโหลดรูปตัวเองด้านบนเพื่อเริ่มค้นหา</p>
+</section>
 
-  <main>
-    <nav class="tabs">
-      <button class="tab active" data-tab="upload">คลังรูปงาน</button>
-      <button class="tab" data-tab="search">หารูปของฉัน</button>
-    </nav>
-
-    <!-- UPLOAD PANEL -->
-    <section class="panel active" id="panel-upload">
-      <div class="dropzone" id="galleryDrop">
-        <svg class="dz-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.6 4.6 0 0 1-.6-9.16 5.5 5.5 0 0 1 10.6-2.1A4.5 4.5 0 0 1 17 18H7Z"/><path d="M12 12v7"/><path d="m9 15 3-3 3 3"/></svg>
-        <p class="dz-title">ลากรูปงานมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
-        <p class="dz-sub">เลือกได้ทีละหลายรูป (JPG / PNG) ระบบจะตรวจจับใบหน้าในแต่ละรูปให้อัตโนมัติ</p>
-        <input type="file" id="galleryInput" accept="image/*" multiple />
-      </div>
-
-      <div class="progress-wrap" id="uploadProgressWrap">
-        <div class="progress-track"><div class="progress-fill" id="uploadProgressFill"></div></div>
-        <p class="progress-label" id="uploadProgressLabel"></p>
-      </div>
-
-      <div class="row">
-        <span class="count-pill">มีรูปอยู่ในคลัง <b id="galleryCount">0</b> รูป</span>
-      </div>
-
-      <div class="contact-sheet" id="galleryGrid"></div>
-      <p class="empty-state" id="galleryEmpty">ยังไม่มีรูปในคลัง — เริ่มจากอัปโหลดรูปงานด้านบน</p>
-
-      <div class="clear-all-row">
-        <button class="btn-text-danger" id="clearAllBtn">ล้างคลังทั้งหมด</button>
-      </div>
-    </section>
-
-    <!-- SEARCH PANEL -->
-    <section class="panel" id="panel-search">
-      <div class="dropzone" id="selfieDrop">
-        <svg class="dz-icon" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.3"/><path d="M5 19.5c1.4-3.2 4-4.8 7-4.8s5.6 1.6 7 4.8"/></svg>
-        <p class="dz-title">อัปโหลดรูปเซลฟี่หรือรูปหน้าตรงของคุณ</p>
-        <p class="dz-sub">ใช้รูปที่เห็นใบหน้าชัดเจน ไม่มีสิ่งบดบัง จะช่วยให้ค้นหาแม่นยำขึ้น</p>
-        <input type="file" id="selfieInput" accept="image/*" />
-      </div>
-
-      <div class="selfie-preview" id="selfiePreview" style="display:none;">
-        <img id="selfieImg" alt="รูปที่ใช้ค้นหา" />
-        <div>
-          <div style="font-weight:600;color:var(--ink);">รูปที่ใช้ค้นหา</div>
-          <div style="color:var(--text-dim);font-size:.85rem;" id="selfieStatus">กำลังตรวจจับใบหน้า…</div>
-        </div>
-      </div>
-
-      <div class="threshold-row">
-        <label for="thresholdSlider">ความเข้มงวดในการจับคู่</label>
-        <input type="range" id="thresholdSlider" min="0.35" max="0.75" step="0.01" value="0.52" />
-        <div class="threshold-labels"><span>เข้มงวด (ตรงมาก)</span><span>หลวม (จับกว้างขึ้น)</span></div>
-      </div>
-
-      <div class="search-error" id="searchError"></div>
-
-      <div class="row">
-        <span class="count-pill" id="resultCount"></span>
-      </div>
-
-      <div class="results-grid" id="resultsGrid"></div>
-      <p class="empty-state" id="resultsEmpty">อัปโหลดรูปตัวเองด้านบนเพื่อเริ่มค้นหา</p>
-    </section>
-  </main>
-
-  <footer>
-    รูปงานถูกเก็บไว้ที่ส่วนกลางเพื่อให้ทุกคนที่เปิดลิงก์นี้เห็นคลังเดียวกัน ส่วนการตรวจจับและเปรียบเทียบใบหน้าทั้งหมดประมวลผลอยู่ในเบราว์เซอร์ของคุณเองเท่านั้น
-  </footer>
-
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">×</button>
-    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="รูปก่อนหน้า">‹</button>
-    <img id="lightboxImg" alt="" />
-    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="รูปถัดไป">›</button>
-    <div class="lightbox-counter" id="lightboxCounter"></div>
-  </div>
-
+</main>
+<footer>
+รูปงานในคลังจะถูกอัปโหลดเก็บไว้ที่ส่วนกลาง (ไม่ใช่แค่ในเครื่องนี้) ทุกคนที่เปิดลิงก์นี้จะเห็นคลังรูปเดียวกัน ส่วนรูปเซลฟี่ที่ใช้ค้นหาจะประมวลผลอยู่ในเบราว์เซอร์ของคุณเท่านั้น ไม่ถูกส่งขึ้นที่ใดทั้งสิ้น
+</footer>
+<div class="lightbox" id="lightbox">
+<button class="lightbox-close" id="lightboxClose">×</button>
+<img id="lightboxImg" alt="" />
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 <script>
 (function(){
-  "use strict";
+"use strict";
+const MODEL_URL = "https://cdn.jsdelivr.net/gh/vladmandic/face-api/model";
+const API_BASE = "/api/photos";
 
-  const MODEL_URL = "https://cdn.jsdelivr.net/gh/vladmandic/face-api/model";
-  const API_BASE = "/api/photos";
-
-  // ---------- Shared-storage helpers (Cloudflare Pages Functions + D1) ----------
-  async function addPhoto(photo){
-    const res = await fetch(API_BASE, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(photo)
-    });
-    if(!res.ok) throw new Error("upload failed: " + res.status);
-    return res.json();
-  }
-  async function getAllPhotos(){
-    const res = await fetch(API_BASE, { cache: "no-store" });
-    if(!res.ok) throw new Error("fetch failed: " + res.status);
-    return res.json();
-  }
-  async function deletePhoto(id){
-    const res = await fetch(API_BASE + "/" + encodeURIComponent(id), { method: "DELETE" });
-    if(!res.ok) throw new Error("delete failed: " + res.status);
-  }
-  async function clearAllPhotos(){
-    const res = await fetch(API_BASE, { method: "DELETE" });
-    if(!res.ok) throw new Error("clear failed: " + res.status);
-  }
-
-  // ---------- Model loading ----------
-  const statusDot = document.getElementById("statusDot");
-  const statusText = document.getElementById("statusText");
-  let modelsPromise = null;
-  function ensureModelsLoaded(){
-    if(!modelsPromise){
-      modelsPromise = (async ()=>{
-        try{
-          await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-          await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-          await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-          statusDot.className = "status-dot ready";
-          statusText.textContent = "โมเดล AI พร้อมใช้งานแล้ว";
-        }catch(err){
-          statusDot.className = "status-dot error";
-          statusText.textContent = "โหลดโมเดลไม่สำเร็จ — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วรีเฟรชหน้านี้";
-          throw err;
-        }
-      })();
-    }
-    return modelsPromise;
-  }
-  ensureModelsLoaded();
-
-  // ---------- Image helpers ----------
-  function loadImageFromFile(file){
-    return new Promise((resolve,reject)=>{
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = ()=>resolve({img,url});
-      img.onerror = reject;
-      img.src = url;
-    });
-  }
-  function resizeForStorage(img, maxDim, quality){
-    maxDim = maxDim || 1400; quality = quality || 0.82;
-    let w = img.naturalWidth, h = img.naturalHeight;
-    if(w > maxDim || h > maxDim){
-      const scale = maxDim / Math.max(w,h);
-      w = Math.round(w*scale); h = Math.round(h*scale);
-    }
-    const canvas = document.createElement("canvas");
-    canvas.width = w; canvas.height = h;
-    canvas.getContext("2d").drawImage(img,0,0,w,h);
-    return canvas.toDataURL("image/jpeg", quality);
-  }
-
-  // ---------- Tabs ----------
-  document.querySelectorAll(".tab").forEach(tabBtn=>{
-    tabBtn.addEventListener("click", ()=>{
-      document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-      tabBtn.classList.add("active");
-      document.getElementById("panel-"+tabBtn.dataset.tab).classList.add("active");
-    });
+// ---------- Shared-storage helpers (Cloudflare Pages Functions + D1) ----------
+async function addPhoto(photo){
+  const res = await fetch(API_BASE, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(photo)
   });
+  if(!res.ok) throw new Error("upload failed: " + res.status);
+  return res.json();
+}
+async function getAllPhotos(){
+  const res = await fetch(API_BASE, { cache: "no-store" });
+  if(!res.ok) throw new Error("fetch failed: " + res.status);
+  return res.json();
+}
+async function deletePhoto(id){
+  const res = await fetch(API_BASE + "/" + encodeURIComponent(id), { method: "DELETE" });
+  if(!res.ok) throw new Error("delete failed: " + res.status);
+}
+async function clearAllPhotos(){
+  const res = await fetch(API_BASE, { method: "DELETE" });
+  if(!res.ok) throw new Error("clear failed: " + res.status);
+}
 
-  // ---------- Gallery upload ----------
-  const galleryDrop = document.getElementById("galleryDrop");
-  const galleryInput = document.getElementById("galleryInput");
-  const galleryGrid = document.getElementById("galleryGrid");
-  const galleryEmpty = document.getElementById("galleryEmpty");
-  const galleryCount = document.getElementById("galleryCount");
-  const uploadProgressWrap = document.getElementById("uploadProgressWrap");
-  const uploadProgressFill = document.getElementById("uploadProgressFill");
-  const uploadProgressLabel = document.getElementById("uploadProgressLabel");
+// ---------- Duplicate-detection helper ----------
+async function hashDataUrl(dataUrl){
+  const enc = new TextEncoder().encode(dataUrl);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
 
-  galleryDrop.addEventListener("click", ()=>galleryInput.click());
-  galleryDrop.addEventListener("dragover", e=>{e.preventDefault();galleryDrop.classList.add("drag");});
-  galleryDrop.addEventListener("dragleave", ()=>galleryDrop.classList.remove("drag"));
-  galleryDrop.addEventListener("drop", e=>{
-    e.preventDefault();galleryDrop.classList.remove("drag");
-    if(e.dataTransfer.files.length) handleGalleryFiles(e.dataTransfer.files);
-  });
-  galleryInput.addEventListener("change", e=>{
-    if(e.target.files.length) handleGalleryFiles(e.target.files);
-    galleryInput.value = "";
-  });
-
-  async function handleGalleryFiles(fileList){
-    await ensureModelsLoaded();
-    const files = Array.from(fileList).filter(f=>f.type.startsWith("image/"));
-    if(!files.length) return;
-    uploadProgressWrap.classList.add("show");
-    for(let i=0;i<files.length;i++){
-      uploadProgressLabel.textContent = "กำลังวิเคราะห์ใบหน้า " + (i+1) + " / " + files.length + " รูป…";
-      uploadProgressFill.style.width = Math.round((i/files.length)*100) + "%";
-      const file = files[i];
-      let img, url;
+// ---------- Model loading ----------
+const statusDot = document.getElementById("statusDot");
+const statusText = document.getElementById("statusText");
+let modelsPromise = null;
+function ensureModelsLoaded(){
+  if(!modelsPromise){
+    modelsPromise = (async ()=>{
       try{
-        ({img,url} = await loadImageFromFile(file));
-        const detections = await faceapi
-          .detectAllFaces(img, new faceapi.TinyFaceDetectorOptions({ inputSize:416, scoreThreshold:0.5 }))
-          .withFaceLandmarks()
-          .withFaceDescriptors();
-        const dataUrl = resizeForStorage(img);
-        const faces = detections.map(d=>Array.from(d.descriptor));
-        await addPhoto({ dataUrl, faces, addedAt: Date.now(), name: file.name });
+        await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+        await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+        statusDot.className = "status-dot ready";
+        statusText.textContent = "โมเดล AI พร้อมใช้งานแล้ว";
       }catch(err){
-        console.error("upload error", file.name, err);
-      }finally{
-        if(url) URL.revokeObjectURL(url);
+        statusDot.className = "status-dot error";
+        statusText.textContent = "โหลดโมเดลไม่สำเร็จ — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วรีเฟรชหน้านี้";
+        modelsPromise = null;
+        throw err;
       }
-    }
-    uploadProgressFill.style.width = "100%";
-    uploadProgressLabel.textContent = "เสร็จแล้ว";
-    setTimeout(()=>{ uploadProgressWrap.classList.remove("show"); uploadProgressFill.style.width="0%"; }, 900);
-    await refreshGallery();
+    })();
   }
+  return modelsPromise;
+}
+ensureModelsLoaded();
 
-  async function refreshGallery(){
-    let photos;
-    try{
-      photos = await getAllPhotos();
-    }catch(err){
-      console.error("โหลดคลังรูปไม่สำเร็จ", err);
-      galleryGrid.innerHTML = "";
-      galleryCount.textContent = "0";
-      galleryEmpty.textContent = "โหลดคลังรูปไม่สำเร็จ — ตรวจสอบว่าตั้งค่า D1 database และเชื่อม Functions ไว้แล้ว";
-      galleryEmpty.style.display = "block";
-      return;
-    }
-    photos.sort((a,b)=>b.addedAt-a.addedAt);
-    galleryCount.textContent = photos.length;
-    galleryGrid.innerHTML = "";
-    galleryEmpty.style.display = photos.length ? "none" : "block";
-    const galleryUrls = photos.map(p=>p.dataUrl);
-    photos.forEach((p,idx)=>{
-      const frame = document.createElement("div");
-      frame.className = "frame";
-      frame.innerHTML =
-        '<img src="'+p.dataUrl+'" alt="" />' +
-        '<span class="face-badge">'+ p.faces.length +' หน้า</span>' +
-        '<button class="del-btn" title="ลบรูปนี้">×</button>';
-      frame.querySelector("img").addEventListener("click", ()=>openLightbox(galleryUrls, idx));
-      frame.querySelector(".del-btn").addEventListener("click", async (ev)=>{
-        ev.stopPropagation();
-        await deletePhoto(p.id);
-        refreshGallery();
-      });
-      galleryGrid.appendChild(frame);
-    });
+// ---------- Image helpers ----------
+function loadImageFromFile(file){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = ()=>resolve({img,url});
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+function resizeForStorage(img, maxDim, quality){
+  maxDim = maxDim || 1400; quality = quality || 0.82;
+  let w = img.naturalWidth, h = img.naturalHeight;
+  if(w > maxDim || h > maxDim){
+    const scale = maxDim / Math.max(w,h);
+    w = Math.round(w*scale); h = Math.round(h*scale);
   }
+  const canvas = document.createElement("canvas");
+  canvas.width = w; canvas.height = h;
+  canvas.getContext("2d").drawImage(img,0,0,w,h);
+  return canvas.toDataURL("image/jpeg", quality);
+}
 
-  document.getElementById("clearAllBtn").addEventListener("click", async ()=>{
-    if(confirm("ล้างรูปทั้งหมดในคลังนี้ถาวรใช่หรือไม่?")){
-      await clearAllPhotos();
-      refreshGallery();
-    }
+// ---------- Tabs ----------
+document.querySelectorAll(".tab").forEach(tabBtn=>{
+  tabBtn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+    tabBtn.classList.add("active");
+    document.getElementById("panel-"+tabBtn.dataset.tab).classList.add("active");
   });
+});
 
-  // ---------- Search ----------
-  const selfieDrop = document.getElementById("selfieDrop");
-  const selfieInput = document.getElementById("selfieInput");
-  const selfiePreview = document.getElementById("selfiePreview");
-  const selfieImg = document.getElementById("selfieImg");
-  const selfieStatus = document.getElementById("selfieStatus");
-  const thresholdSlider = document.getElementById("thresholdSlider");
-  const searchError = document.getElementById("searchError");
-  const resultsGrid = document.getElementById("resultsGrid");
-  const resultsEmpty = document.getElementById("resultsEmpty");
-  const resultCount = document.getElementById("resultCount");
+// ---------- Gallery upload ----------
+const galleryDrop = document.getElementById("galleryDrop");
+const galleryInput = document.getElementById("galleryInput");
+const galleryGrid = document.getElementById("galleryGrid");
+const galleryEmpty = document.getElementById("galleryEmpty");
+const galleryCount = document.getElementById("galleryCount");
+const uploadProgressWrap = document.getElementById("uploadProgressWrap");
+const uploadProgressFill = document.getElementById("uploadProgressFill");
+const uploadProgressLabel = document.getElementById("uploadProgressLabel");
 
-  let currentDescriptor = null;
+galleryDrop.addEventListener("dragover", e=>{e.preventDefault();galleryDrop.classList.add("drag");});
+galleryDrop.addEventListener("dragleave", ()=>galleryDrop.classList.remove("drag"));
+galleryDrop.addEventListener("drop", e=>{
+  e.preventDefault();galleryDrop.classList.remove("drag");
+  if(e.dataTransfer.files.length) handleGalleryFiles(e.dataTransfer.files);
+});
+galleryInput.addEventListener("change", e=>{
+  if(e.target.files.length) handleGalleryFiles(e.target.files);
+  galleryInput.value = "";
+});
 
-  selfieDrop.addEventListener("click", ()=>selfieInput.click());
-  selfieDrop.addEventListener("dragover", e=>{e.preventDefault();selfieDrop.classList.add("drag");});
-  selfieDrop.addEventListener("dragleave", ()=>selfieDrop.classList.remove("drag"));
-  selfieDrop.addEventListener("drop", e=>{
-    e.preventDefault();selfieDrop.classList.remove("drag");
-    if(e.dataTransfer.files.length) handleSelfieFile(e.dataTransfer.files[0]);
-  });
-  selfieInput.addEventListener("change", e=>{
-    if(e.target.files.length) handleSelfieFile(e.target.files[0]);
-    selfieInput.value = "";
-  });
-  thresholdSlider.addEventListener("change", ()=>{
-    if(currentDescriptor) runSearch();
-  });
-
-  async function handleSelfieFile(file){
-    hideSearchError();
+async function handleGalleryFiles(fileList){
+  try{
     await ensureModelsLoaded();
-    selfiePreview.style.display = "flex";
-    selfieImg.src = URL.createObjectURL(file);
-    selfieStatus.textContent = "กำลังตรวจจับใบหน้า…";
-    resultsGrid.innerHTML = "";
-    resultsEmpty.style.display = "none";
-    resultCount.textContent = "";
+  }catch(err){
+    console.error("model load error", err);
+    return;
+  }
+  const files = Array.from(fileList).filter(f=>f.type.startsWith("image/"));
+  if(!files.length) return;
 
+  uploadProgressWrap.classList.add("show");
+
+  let existingHashes = new Set();
+  try{
+    const existing = await getAllPhotos();
+    for(const p of existing){
+      if(p.hash) existingHashes.add(p.hash);
+    }
+  }catch(err){
+    console.error("could not preload existing hashes", err);
+  }
+
+  let addedCount = 0, dupCount = 0;
+
+  for(let i=0;i<files.length;i++){
+    uploadProgressLabel.textContent = "กำลังวิเคราะห์ใบหน้า " + (i+1) + " / " + files.length + " รูป…";
+    uploadProgressFill.style.width = Math.round((i/files.length)*100) + "%";
+    const file = files[i];
     let img, url;
     try{
       ({img,url} = await loadImageFromFile(file));
-      const detection = await faceapi
-        .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions({ inputSize:416, scoreThreshold:0.5 }))
+      const detections = await faceapi
+        .detectAllFaces(img, new faceapi.TinyFaceDetectorOptions({ inputSize:416, scoreThreshold:0.5 }))
         .withFaceLandmarks()
-        .withFaceDescriptor();
-      if(!detection){
-        selfieStatus.textContent = "ตรวจไม่พบใบหน้า";
-        showSearchError("ตรวจไม่พบใบหน้าในรูปนี้ ลองใช้รูปที่เห็นหน้าชัดเจนกว่านี้ ไม่มีแว่นกันแดดหรือหน้ากากบัง");
-        currentDescriptor = null;
-        return;
+        .withFaceDescriptors();
+      const dataUrl = resizeForStorage(img);
+      const hash = await hashDataUrl(dataUrl);
+
+      if(existingHashes.has(hash)){
+        dupCount++;
+      }else{
+        const faces = detections.map(d=>Array.from(d.descriptor));
+        await addPhoto({ dataUrl, faces, hash, addedAt: Date.now(), name: file.name });
+        existingHashes.add(hash);
+        addedCount++;
       }
-      selfieStatus.textContent = "พบใบหน้าแล้ว — กำลังค้นหาในคลัง…";
-      currentDescriptor = detection.descriptor;
-      await runSearch();
     }catch(err){
-      console.error(err);
-      selfieStatus.textContent = "เกิดข้อผิดพลาดระหว่างวิเคราะห์รูป";
-      showSearchError("เกิดข้อผิดพลาดระหว่างวิเคราะห์รูปนี้ ลองใหม่อีกครั้ง");
+      console.error("upload error", file.name, err);
     }finally{
       if(url) URL.revokeObjectURL(url);
     }
   }
 
-  async function runSearch(){
-    if(!currentDescriptor) return;
-    const threshold = parseFloat(thresholdSlider.value);
-    let photos;
-    try{
-      photos = await getAllPhotos();
-    }catch(err){
-      console.error("ค้นหาไม่สำเร็จ", err);
-      showSearchError("โหลดคลังรูปไม่สำเร็จ ลองรีเฟรชหน้านี้อีกครั้ง");
-      return;
-    }
-    const results = [];
-    photos.forEach(p=>{
-      let best = Infinity;
-      p.faces.forEach(f=>{
-        const dist = faceapi.euclideanDistance(currentDescriptor, new Float32Array(f));
-        if(dist < best) best = dist;
-      });
-      if(best <= threshold) results.push({ photo:p, distance:best });
+  uploadProgressFill.style.width = "100%";
+  uploadProgressLabel.textContent = dupCount
+    ? "เสร็จแล้ว — เพิ่ม " + addedCount + " รูป, ข้ามรูปซ้ำ " + dupCount + " รูป"
+    : "เสร็จแล้ว — เพิ่ม " + addedCount + " รูป";
+  setTimeout(()=>{ uploadProgressWrap.classList.remove("show"); uploadProgressFill.style.width="0%"; }, 1800);
+  await refreshGallery();
+}
+
+async function refreshGallery(){
+  let photos;
+  try{
+    photos = await getAllPhotos();
+  }catch(err){
+    console.error("โหลดคลังรูปไม่สำเร็จ", err);
+    galleryGrid.innerHTML = "";
+    galleryCount.textContent = "0";
+    galleryEmpty.textContent = "ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง";
+    galleryEmpty.style.display = "block";
+    return;
+  }
+  photos.sort((a,b)=>b.addedAt-a.addedAt);
+  galleryCount.textContent = photos.length;
+  galleryGrid.innerHTML = "";
+  galleryEmpty.style.display = photos.length ? "none" : "block";
+  photos.forEach(p=>{
+    const frame = document.createElement("div");
+    frame.className = "frame";
+    frame.innerHTML =
+      '<img src="'+p.dataUrl+'" alt="" />' +
+      '<span class="face-badge">'+ p.faces.length +' หน้า</span>' +
+      '<button class="del-btn" title="ลบรูปนี้">×</button>';
+    frame.querySelector("img").addEventListener("click", ()=>openLightbox(p.dataUrl));
+    frame.querySelector(".del-btn").addEventListener("click", async (ev)=>{
+      ev.stopPropagation();
+      await deletePhoto(p.id);
+      refreshGallery();
     });
-    results.sort((a,b)=>a.distance-b.distance);
-    renderResults(results, photos.length);
-  }
-
-  function renderResults(results, totalPhotos){
-    resultsGrid.innerHTML = "";
-    selfieStatus.textContent = "พบใบหน้าแล้ว";
-    if(!totalPhotos){
-      resultsEmpty.textContent = "ยังไม่มีรูปในคลังงาน — ไปที่แท็บ “คลังรูปงาน” เพื่ออัปโหลดก่อน";
-      resultsEmpty.style.display = "block";
-      resultCount.textContent = "";
-      return;
-    }
-    resultCount.textContent = "พบ " + results.length + " รูปที่ตรงกับใบหน้าของคุณ (จากทั้งหมด " + totalPhotos + " รูป)";
-    if(!results.length){
-      resultsEmpty.textContent = "ไม่พบรูปที่ตรงกับใบหน้านี้ ลองลดความเข้มงวดในการจับคู่ดู";
-      resultsEmpty.style.display = "block";
-      return;
-    }
-    resultsEmpty.style.display = "none";
-    const resultUrls = results.map(r=>r.photo.dataUrl);
-    results.forEach((r,idx)=>{
-      const card = document.createElement("div");
-      card.className = "result-card";
-      const pct = Math.max(0, Math.min(100, Math.round((1 - r.distance) * 100)));
-      card.innerHTML =
-        '<img src="'+r.photo.dataUrl+'" alt="" />' +
-        '<div class="result-meta"><span class="match-tag">ตรงกัน ~'+pct+'%</span></div>';
-      card.querySelector("img").addEventListener("click", ()=>openLightbox(resultUrls, idx));
-      resultsGrid.appendChild(card);
-    });
-  }
-
-  function showSearchError(msg){ searchError.textContent = msg; searchError.classList.add("show"); }
-  function hideSearchError(){ searchError.classList.remove("show"); }
-
-  // ---------- Lightbox ----------
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightboxImg");
-  const lightboxPrev = document.getElementById("lightboxPrev");
-  const lightboxNext = document.getElementById("lightboxNext");
-  const lightboxCounter = document.getElementById("lightboxCounter");
-  let lightboxList = [];
-  let lightboxIndex = 0;
-
-  document.getElementById("lightboxClose").addEventListener("click", ()=>lightbox.classList.remove("show"));
-  lightbox.addEventListener("click", (e)=>{ if(e.target===lightbox) lightbox.classList.remove("show"); });
-
-  function openLightbox(list, index){
-    lightboxList = Array.isArray(list) ? list : [list];
-    lightboxIndex = index || 0;
-    showLightboxImage();
-    lightbox.classList.add("show");
-  }
-
-  function showLightboxImage(){
-    if(!lightboxList.length) return;
-    lightboxIndex = (lightboxIndex + lightboxList.length) % lightboxList.length;
-    lightboxImg.src = lightboxList[lightboxIndex];
-    const multiple = lightboxList.length > 1;
-    lightboxPrev.style.display = multiple ? "flex" : "none";
-    lightboxNext.style.display = multiple ? "flex" : "none";
-    lightboxCounter.style.display = multiple ? "block" : "none";
-    lightboxCounter.textContent = (lightboxIndex+1) + " / " + lightboxList.length;
-  }
-
-  function lightboxShowPrev(){ lightboxIndex--; showLightboxImage(); }
-  function lightboxShowNext(){ lightboxIndex++; showLightboxImage(); }
-
-  lightboxPrev.addEventListener("click", (e)=>{ e.stopPropagation(); lightboxShowPrev(); });
-  lightboxNext.addEventListener("click", (e)=>{ e.stopPropagation(); lightboxShowNext(); });
-
-  document.addEventListener("keydown", (e)=>{
-    if(!lightbox.classList.contains("show")) return;
-    if(e.key === "ArrowLeft") lightboxShowPrev();
-    else if(e.key === "ArrowRight") lightboxShowNext();
-    else if(e.key === "Escape") lightbox.classList.remove("show");
+    galleryGrid.appendChild(frame);
   });
+}
 
-  // Swipe support (touch)
-  let touchStartX = null, touchStartY = null;
-  lightbox.addEventListener("touchstart", (e)=>{
-    if(e.touches.length !== 1) return;
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive:true });
-  lightbox.addEventListener("touchend", (e)=>{
-    if(touchStartX === null) return;
-    const touch = e.changedTouches[0];
-    const dx = touch.clientX - touchStartX;
-    const dy = touch.clientY - touchStartY;
-    touchStartX = null; touchStartY = null;
-    if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
-      if(dx < 0) lightboxShowNext(); else lightboxShowPrev();
+document.getElementById("clearAllBtn").addEventListener("click", async ()=>{
+  if(confirm("ล้างรูปทั้งหมดในคลังนี้ถาวรใช่หรือไม่?")){
+    await clearAllPhotos();
+    refreshGallery();
+  }
+});
+
+// ---------- Search ----------
+const selfieDrop = document.getElementById("selfieDrop");
+const selfieInput = document.getElementById("selfieInput");
+const selfiePreview = document.getElementById("selfiePreview");
+const selfieImg = document.getElementById("selfieImg");
+const selfieStatus = document.getElementById("selfieStatus");
+const thresholdSlider = document.getElementById("thresholdSlider");
+const searchError = document.getElementById("searchError");
+const resultsGrid = document.getElementById("resultsGrid");
+const resultsEmpty = document.getElementById("resultsEmpty");
+const resultCount = document.getElementById("resultCount");
+let currentDescriptor = null;
+
+selfieDrop.addEventListener("dragover", e=>{e.preventDefault();selfieDrop.classList.add("drag");});
+selfieDrop.addEventListener("dragleave", ()=>selfieDrop.classList.remove("drag"));
+selfieDrop.addEventListener("drop", e=>{
+  e.preventDefault();selfieDrop.classList.remove("drag");
+  if(e.dataTransfer.files.length) handleSelfieFile(e.dataTransfer.files[0]);
+});
+selfieInput.addEventListener("change", e=>{
+  if(e.target.files.length) handleSelfieFile(e.target.files[0]);
+  selfieInput.value = "";
+});
+thresholdSlider.addEventListener("change", ()=>{
+  if(currentDescriptor) runSearch();
+});
+
+async function handleSelfieFile(file){
+  hideSearchError();
+  try{
+    await ensureModelsLoaded();
+  }catch(err){
+    showSearchError("โหลดโมเดล AI ไม่สำเร็จ ลองรีเฟรชหน้านี้อีกครั้ง");
+    return;
+  }
+  selfiePreview.style.display = "flex";
+  selfieImg.src = URL.createObjectURL(file);
+  selfieStatus.textContent = "กำลังตรวจจับใบหน้า…";
+  resultsGrid.innerHTML = "";
+  resultsEmpty.style.display = "none";
+  resultCount.textContent = "";
+
+  let img, url;
+  try{
+    ({img,url} = await loadImageFromFile(file));
+    const detection = await faceapi
+      .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions({ inputSize:416, scoreThreshold:0.5 }))
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+    if(!detection){
+      selfieStatus.textContent = "ตรวจไม่พบใบหน้า";
+      showSearchError("ตรวจไม่พบใบหน้าในรูปนี้ ลองใช้รูปที่เห็นหน้าชัดเจนกว่านี้ ไม่มีแว่นกันแดดหรือหน้ากากบัง");
+      currentDescriptor = null;
+      return;
     }
-  }, { passive:true });
+    selfieStatus.textContent = "พบใบหน้าแล้ว — กำลังค้นหาในคลัง…";
+    currentDescriptor = detection.descriptor;
+    await runSearch();
+  }catch(err){
+    console.error(err);
+    selfieStatus.textContent = "เกิดข้อผิดพลาดระหว่างวิเคราะห์รูป";
+    showSearchError("เกิดข้อผิดพลาดระหว่างวิเคราะห์รูปนี้ ลองใหม่อีกครั้ง");
+  }finally{
+    if(url) URL.revokeObjectURL(url);
+  }
+}
 
-  // ---------- Init ----------
-  refreshGallery();
+async function runSearch(){
+  if(!currentDescriptor) return;
+  const threshold = parseFloat(thresholdSlider.value);
+  let photos;
+  try{
+    photos = await getAllPhotos();
+  }catch(err){
+    console.error("ค้นหาไม่สำเร็จ", err);
+    showSearchError("โหลดคลังรูปไม่สำเร็จ ลองรีเฟรชหน้านี้อีกครั้ง");
+    return;
+  }
+  const results = [];
+  photos.forEach(p=>{
+    let best = Infinity;
+    p.faces.forEach(f=>{
+      const dist = faceapi.euclideanDistance(currentDescriptor, new Float32Array(f));
+      if(dist < best) best = dist;
+    });
+    if(best <= threshold) results.push({ photo:p, distance:best });
+  });
+  results.sort((a,b)=>a.distance-b.distance);
+  renderResults(results, photos.length);
+}
+
+function renderResults(results, totalPhotos){
+  resultsGrid.innerHTML = "";
+  selfieStatus.textContent = "พบใบหน้าแล้ว";
+  if(!totalPhotos){
+    resultsEmpty.textContent = "ยังไม่มีรูปในคลังงาน — ไปที่แท็บ “คลังรูปงาน” เพื่ออัปโหลดก่อน";
+    resultsEmpty.style.display = "block";
+    resultCount.textContent = "";
+    return;
+  }
+  resultCount.textContent = "พบ " + results.length + " รูปที่ตรงกับใบหน้าของคุณ (จากทั้งหมด " + totalPhotos + " รูป)";
+  if(!results.length){
+    resultsEmpty.textContent = "ไม่พบรูปที่ตรงกับใบหน้านี้ ลองลดความเข้มงวดในการจับคู่ดู";
+    resultsEmpty.style.display = "block";
+    return;
+  }
+  resultsEmpty.style.display = "none";
+  results.forEach(r=>{
+    const card = document.createElement("div");
+    card.className = "result-card";
+    const pct = Math.max(0, Math.min(100, Math.round((1 - r.distance) * 100)));
+    card.innerHTML =
+      '<img src="'+r.photo.dataUrl+'" alt="" />' +
+      '<div class="result-meta"><span class="match-tag">ตรงกัน ~'+pct+'%</span></div>';
+    card.querySelector("img").addEventListener("click", ()=>openLightbox(r.photo.dataUrl));
+    resultsGrid.appendChild(card);
+  });
+}
+
+function showSearchError(msg){ searchError.textContent = msg; searchError.classList.add("show"); }
+function hideSearchError(){ searchError.classList.remove("show"); }
+
+// ---------- Lightbox ----------
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+document.getElementById("lightboxClose").addEventListener("click", ()=>lightbox.classList.remove("show"));
+lightbox.addEventListener("click", (e)=>{ if(e.target===lightbox) lightbox.classList.remove("show"); });
+function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add("show"); }
+
+// ---------- Init ----------
+refreshGallery();
 })();
 </script>
 </body>
