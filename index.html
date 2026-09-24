@@ -357,8 +357,13 @@ galleryDrop.addEventListener("drop", e=>{
   if(e.dataTransfer.files.length) handleGalleryFiles(e.dataTransfer.files);
 });
 galleryInput.addEventListener("change", e=>{
-  if(e.target.files.length) handleGalleryFiles(e.target.files);
+  // e.target.files is a *live* FileList tied to the input element.
+  // Snapshot it into a real array first, THEN clear the input —
+  // otherwise clearing the input empties this same FileList before
+  // handleGalleryFiles (which is async) gets a chance to read it.
+  const picked = Array.from(e.target.files);
   galleryInput.value = "";
+  if(picked.length) handleGalleryFiles(picked);
 });
 
 async function handleGalleryFiles(fileList){
