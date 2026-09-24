@@ -94,6 +94,33 @@ main{max-width:880px;margin:0 auto;padding:0 20px;}
 .count-pill{font-size:.87rem;color:var(--ink-soft);}
 .count-pill b{color:var(--ink);}
 
+.subtle-link{
+  background:none;border:none;color:var(--ink-soft);font-size:.78rem;
+  cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:2px;
+  opacity:.75;
+}
+.subtle-link:hover{color:var(--coral);opacity:1;}
+
+.confirm-overlay{
+  position:fixed;inset:0;background:rgba(22,35,43,.55);display:none;align-items:center;justify-content:center;
+  z-index:60;padding:20px;
+}
+.confirm-overlay.show{display:flex;}
+.confirm-box{
+  background:var(--surface);border-radius:var(--radius-l);padding:24px;max-width:360px;width:100%;
+  border:1px solid var(--line);
+}
+.confirm-box h3{margin:0 0 8px;font-size:1.05rem;color:var(--ink);}
+.confirm-box p{margin:0 0 14px;font-size:.88rem;color:var(--ink-soft);}
+.confirm-box input[type=text]{
+  width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius-s);
+  font-size:.92rem;margin-bottom:14px;font-family:inherit;
+}
+.confirm-box input[type=text]:focus{outline:2px solid var(--teal);outline-offset:1px;}
+.confirm-actions{display:flex;gap:8px;justify-content:flex-end;}
+button.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink-soft);}
+button.btn.ghost:hover{background:var(--teal-tint);}
+
 button.btn{
   background:var(--teal);color:#fff;border:none;border-radius:var(--radius-s);padding:10px 18px;
   font-weight:600;font-size:.9rem;cursor:pointer;transition:background .15s;
@@ -161,6 +188,18 @@ input[type=range]{width:100%;accent-color:var(--teal);}
 .lightbox.show{display:flex;}
 .lightbox img{max-width:100%;max-height:100%;border-radius:8px;}
 .lightbox-close{position:absolute;top:18px;right:22px;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer;}
+.lightbox-nav{
+  position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;
+  font-size:1.6rem;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.lightbox-nav:hover{background:rgba(255,255,255,.22);}
+.lightbox-nav.prev{left:14px;}
+.lightbox-nav.next{right:14px;}
+.lightbox-nav[hidden]{display:none;}
+.lightbox-counter{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.8);
+  font-size:.8rem;
+}
 
 footer{max-width:880px;margin:40px auto 0;padding:0 20px;color:var(--ink-soft);font-size:.8rem;border-top:1px solid var(--line);padding-top:20px;}
 
@@ -203,10 +242,10 @@ footer{max-width:880px;margin:40px auto 0;padding:0 20px;color:var(--ink-soft);f
 </div>
 <div class="row">
 <span class="count-pill">มีรูปอยู่ในคลัง <b id="galleryCount">0</b> รูป</span>
-<button class="btn danger" id="clearAllBtn">ล้างคลังทั้งหมด</button>
 </div>
 <div class="contact-sheet" id="galleryGrid"></div>
 <p class="empty-state" id="galleryEmpty">ยังไม่มีรูปในคลัง — เริ่มจากอัปโหลดรูปงานด้านบน</p>
+<button class="subtle-link" id="clearAllBtn">ล้างคลังทั้งหมด</button>
 </section>
 
 <!-- SEARCH PANEL -->
@@ -240,9 +279,23 @@ footer{max-width:880px;margin:40px auto 0;padding:0 20px;color:var(--ink-soft);f
 <footer>
 รูปงานในคลังจะถูกอัปโหลดเก็บไว้ที่ส่วนกลาง (ไม่ใช่แค่ในเครื่องนี้) ทุกคนที่เปิดลิงก์นี้จะเห็นคลังรูปเดียวกัน ส่วนรูปเซลฟี่ที่ใช้ค้นหาจะประมวลผลอยู่ในเบราว์เซอร์ของคุณเท่านั้น ไม่ถูกส่งขึ้นที่ใดทั้งสิ้น
 </footer>
+<div class="confirm-overlay" id="clearConfirmOverlay">
+<div class="confirm-box">
+<h3>ล้างคลังรูปทั้งหมด?</h3>
+<p>รูปทุกรูปในคลังงานจะถูกลบถาวร กู้คืนไม่ได้ — พิมพ์คำว่า <b>ลบ</b> ด้านล่างเพื่อยืนยัน</p>
+<input type="text" id="clearConfirmInput" placeholder="พิมพ์ว่า ลบ" autocomplete="off" />
+<div class="confirm-actions">
+<button class="btn ghost" id="clearConfirmCancel">ยกเลิก</button>
+<button class="btn danger" id="clearConfirmSubmit" disabled>ล้างคลังทั้งหมด</button>
+</div>
+</div>
+</div>
 <div class="lightbox" id="lightbox">
 <button class="lightbox-close" id="lightboxClose">×</button>
+<button class="lightbox-nav prev" id="lightboxPrev">‹</button>
 <img id="lightboxImg" alt="" />
+<button class="lightbox-nav next" id="lightboxNext">›</button>
+<span class="lightbox-counter" id="lightboxCounter"></span>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 <script>
@@ -443,14 +496,15 @@ async function refreshGallery(){
   galleryCount.textContent = photos.length;
   galleryGrid.innerHTML = "";
   galleryEmpty.style.display = photos.length ? "none" : "block";
-  photos.forEach(p=>{
+  const dataUrls = photos.map(p=>p.dataUrl);
+  photos.forEach((p, idx)=>{
     const frame = document.createElement("div");
     frame.className = "frame";
     frame.innerHTML =
       '<img src="'+p.dataUrl+'" alt="" />' +
       '<span class="face-badge">'+ p.faces.length +' หน้า</span>' +
       '<button class="del-btn" title="ลบรูปนี้">×</button>';
-    frame.querySelector("img").addEventListener("click", ()=>openLightbox(p.dataUrl));
+    frame.querySelector("img").addEventListener("click", ()=>openLightbox(dataUrls, idx));
     frame.querySelector(".del-btn").addEventListener("click", async (ev)=>{
       ev.stopPropagation();
       await deletePhoto(p.id);
@@ -460,11 +514,31 @@ async function refreshGallery(){
   });
 }
 
-document.getElementById("clearAllBtn").addEventListener("click", async ()=>{
-  if(confirm("ล้างรูปทั้งหมดในคลังนี้ถาวรใช่หรือไม่?")){
-    await clearAllPhotos();
-    refreshGallery();
-  }
+const clearConfirmOverlay = document.getElementById("clearConfirmOverlay");
+const clearConfirmInput = document.getElementById("clearConfirmInput");
+const clearConfirmSubmit = document.getElementById("clearConfirmSubmit");
+const clearConfirmCancel = document.getElementById("clearConfirmCancel");
+
+document.getElementById("clearAllBtn").addEventListener("click", ()=>{
+  clearConfirmInput.value = "";
+  clearConfirmSubmit.disabled = true;
+  clearConfirmOverlay.classList.add("show");
+  clearConfirmInput.focus();
+});
+clearConfirmInput.addEventListener("input", ()=>{
+  clearConfirmSubmit.disabled = clearConfirmInput.value.trim() !== "ลบ";
+});
+clearConfirmCancel.addEventListener("click", ()=>{
+  clearConfirmOverlay.classList.remove("show");
+});
+clearConfirmOverlay.addEventListener("click", (e)=>{
+  if(e.target===clearConfirmOverlay) clearConfirmOverlay.classList.remove("show");
+});
+clearConfirmSubmit.addEventListener("click", async ()=>{
+  if(clearConfirmInput.value.trim() !== "ลบ") return;
+  clearConfirmOverlay.classList.remove("show");
+  await clearAllPhotos();
+  refreshGallery();
 });
 
 // ---------- Search ----------
@@ -574,14 +648,15 @@ function renderResults(results, totalPhotos){
     return;
   }
   resultsEmpty.style.display = "none";
-  results.forEach(r=>{
+  const dataUrls = results.map(r=>r.photo.dataUrl);
+  results.forEach((r, idx)=>{
     const card = document.createElement("div");
     card.className = "result-card";
     const pct = Math.max(0, Math.min(100, Math.round((1 - r.distance) * 100)));
     card.innerHTML =
       '<img src="'+r.photo.dataUrl+'" alt="" />' +
       '<div class="result-meta"><span class="match-tag">ตรงกัน ~'+pct+'%</span></div>';
-    card.querySelector("img").addEventListener("click", ()=>openLightbox(r.photo.dataUrl));
+    card.querySelector("img").addEventListener("click", ()=>openLightbox(dataUrls, idx));
     resultsGrid.appendChild(card);
   });
 }
@@ -592,9 +667,48 @@ function hideSearchError(){ searchError.classList.remove("show"); }
 // ---------- Lightbox ----------
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
+const lightboxPrev = document.getElementById("lightboxPrev");
+const lightboxNext = document.getElementById("lightboxNext");
+const lightboxCounter = document.getElementById("lightboxCounter");
+let lightboxItems = [];
+let lightboxIndex = 0;
+
 document.getElementById("lightboxClose").addEventListener("click", ()=>lightbox.classList.remove("show"));
 lightbox.addEventListener("click", (e)=>{ if(e.target===lightbox) lightbox.classList.remove("show"); });
-function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add("show"); }
+lightboxPrev.addEventListener("click", ()=>lightboxNav(-1));
+lightboxNext.addEventListener("click", ()=>lightboxNav(1));
+document.addEventListener("keydown", e=>{
+  if(!lightbox.classList.contains("show")) return;
+  if(e.key === "ArrowLeft") lightboxNav(-1);
+  else if(e.key === "ArrowRight") lightboxNav(1);
+  else if(e.key === "Escape") lightbox.classList.remove("show");
+});
+let touchStartX = null;
+lightbox.addEventListener("touchstart", e=>{ touchStartX = e.changedTouches[0].clientX; }, { passive:true });
+lightbox.addEventListener("touchend", e=>{
+  if(touchStartX===null) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) > 40) lightboxNav(dx > 0 ? -1 : 1);
+  touchStartX = null;
+}, { passive:true });
+
+function openLightbox(items, index){
+  lightboxItems = items;
+  lightboxIndex = index;
+  const multi = lightboxItems.length > 1;
+  lightboxPrev.hidden = !multi;
+  lightboxNext.hidden = !multi;
+  showLightboxImage();
+  lightbox.classList.add("show");
+}
+function lightboxNav(delta){
+  lightboxIndex = (lightboxIndex + delta + lightboxItems.length) % lightboxItems.length;
+  showLightboxImage();
+}
+function showLightboxImage(){
+  lightboxImg.src = lightboxItems[lightboxIndex];
+  lightboxCounter.textContent = lightboxItems.length > 1 ? (lightboxIndex+1) + " / " + lightboxItems.length : "";
+}
 
 // ---------- Init ----------
 refreshGallery();
